@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Portfolio | Minimalist Elegant Style</title>
+    <!-- Elegant Minimalist Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- MINIMALIST DESIGN SYSTEM VARIABLES --- */
+        :root {
+            --bg-color: #fcfbfa;          /* Soft, warm paper white */
+            --text-main: #1c1c1a;         /* High-contrast ink black */
+            --text-muted: #706f6b;        /* Elegant stone gray */
+            --accent-gold: #c5a880;       /* Luxurious warm gold accent */
+            --border-light: #e5e3df;      /* Subtle structured dividing lines */
+            --card-bg: #ffffff;
+            --transition-smooth: all 0.4s cubic-bezier(0.215, 0.610, 0.355, 1);
+        }
+
+        /* --- GLOBAL BASE STYLES --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            letter-spacing: 0.5px;
+        }
+
+        h1, h2, h3, .nav-item {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* --- LOGO / BRANDING --- */
+        .brand-logo {
+            font-size: 2.4rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        /* --- MINIMALIST BAR NAVIGATION --- */
+        .navbar {
+            display: flex;
+            justify-content: center;
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+            padding: 10px 0;
+            margin-bottom: 60px;
+        }
+
+        .nav-item {
+            padding: 10px 30px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            position: relative;
+        }
+
+        /* Smooth underline expanding hover effect */
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            width: 0;
+            height: 1px;
+            background-color: var(--text-main);
+            transition: var(--transition-smooth);
+            transform: translateX(-50%);
+        }
+
+        .nav-item:hover::after, .nav-item.active::after {
+            width: 40%;
+        }
+
+        .nav-item.active {
+            color: var(--text-main);
+            font-style: italic;
+        }
+
+        .nav-item.inactive-tab {
+            opacity: 0.5;
+        }
+
+        /* --- APP VIEWS SECTIONS --- */
+        .app-section {
+            display: none;
+            animation: elegantFade 0.7s ease forwards;
+        }
+
+        .app-section.active-section {
+            display: block;
+        }
+
+        @keyframes elegantFade {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- REUSABLE EDITORIAL CARDS --- */
+        .editorial-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            padding: 40px;
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+
+        /* Lift and shadow depth on hover */
+        .editorial-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--text-main);
+            box-shadow: 0 15px 30px rgba(28, 28, 26, 0.04);
+        }
+
+        /* Click Pulse Animation */
+        .editorial-card:active {
+            transform: scale(0.99);
+        }
+
+        /* --- HOMEPAGE VIEW --- */
+        .hero-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-headline h2 {
+            font-size: 3.5rem;
+            font-weight: 500;
+            line-height: 1.15;
+            margin-bottom: 25px;
+        }
+
+        .hero-headline span {
+            font-style: italic;
+            color: var(--accent-gold);
+        }
+
+        /* IMAGE SLIDER CAROUSEL */
+        .carousel-frame {
+            position: relative;
+            width: 100%;
+            height: 450px;
+            overflow: hidden;
+        }
+
+        .slide-img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        .slide-img.active-slide {
+            opacity: 1;
+        }
+
+        .carousel-nav-btns {
+            display: flex;
+            justify-content: flex-end;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .nav-arrow {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-main);
+            transition: var(--transition-smooth);
+            padding: 5px 15px;
+        }
+
+        .nav-arrow:hover {
+            color: var(--accent-gold);
+            transform: translateX(3px);
+        }
+
+        .nav-arrow.left-arrow:hover {
+            transform: translateX(-3px);
+        }
+
+        /* --- SERVICES VIEW (With Slide-To-Reveal Before/After) --- */
+        .services-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .services-menu-list {
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+        }
+
+        .menu-item {
+            position: relative;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        /* Legacy Accent implementation: Thin gold marker line */
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 5px;
+            width: 3px;
+            height: 25px;
+            background-color: var(--accent-gold);
+        }
+
+        .menu-item h3 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .menu-item p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            font-weight: 300;
+        }
+
+        /* SLIDE TO REVEAL CONTAINER */
+        .reveal-showcase-box {
+            position: relative;
+            width: 100%;
+            height: 480px;
+            background: #f0f0f0;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+        }
+
+        .reveal-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .reveal-layer.after-layer {
+            width: 50%; /* Starts perfectly cut down the middle */
+            border-right: 2px solid #ffffff;
+            z-index: 2;
+            box-shadow: 10px 0 30px rgba(0,0,0,0.1);
+        }
+
+        /* Interactive HTML Range Slider overlaid on top */
+        .range-slider-control {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            -webkit-appearance: none;
+            appearance: none;
+            z-index: 10;
+            cursor: ew-resize;
+        }
+
+        .range-slider-control::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 40px;
+            height: 40px;
+            background: var(--text-main);
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+        }
+
+        /* --- CONTACT VIEW --- */
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            justify-content: center;
+        }
+
+        .detail-row {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .detail-row span.label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+        }
+
+        .detail-row span.value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+        }
+
+        .contact-editorial-img {
+            width: 100%;
+            height: 400px;
+            background-image: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=600&q=80');
+            background-size: cover;
+            background-position: center;
+            filter: grayscale(30%);
+        }
+
+        /* --- REVIEWS VIEW (Growing Business Editorial) --- */
+        .reviews-layout-centered {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 350px;
+        }
+
+        .launch-announcement-box {
+            text-align: center;
+            max-width: 700px;
+        }
+
+        .launch-announcement-box h4 {
+            font-size: 3rem;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .launch-announcement-box p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            font-weight: 300;
+            margin-bottom: 30px;
+        }
+
+        .editorial-badge {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 1px solid var(--text-main);
+            padding: 8px 24px;
+            display: inline-block;
+        }
+
+        /* --- MOBILE LAYOUT ENGINES --- */
+        @media (max-width: 868px) {
+            .hero-split, .services-layout, .contact-layout {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+
+            .carousel-frame { height: 320px; }
+            .reveal-showcase-box { height: 350px; }
+            
+            .menu-item::before {
+                left: 50%;
+                top: -15px;
+                width: 40px;
+                height: 2px;
+                transform: translateX(-50%);
+            }
+            .carousel-nav-btns { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Minimalist Luxury Header Branding -->
+        <div class="brand-logo">THE STUDIO OPR</div>
+
+        <!-- Clean Segment Line Navbar Link Component Menu -->
+        <nav class="navbar">
+            <a class="nav-item active" onclick="switchTab('homepage', this)">Collection</a>
+            <a class="nav-item inactive-tab" onclick="switchTab('services', this)">Services</a>
+            <a class="nav-item inactive-tab" onclick="switchTab('contact', this)">Atelier</a>
+            <a class="nav-item inactive-tab" onclick="switchTab('reviews', this)">Journal</a>
+        </nav>
+
+        <!-- HOMEPAGE SECTION -->
+        <div id="homepage" class="app-section active-section">
+            <div class="hero-split">
+                <div class="hero-headline">
+                    <h2>Simplicity is the ultimate <span>sophistication</span>.</h2>
+                    <p style="color: var(--text-muted); font-weight: 300; line-height: 1.6;">Curating minimal aesthetic structural lines for residential architectural portfolios and premium lifestyles.</p>
+                </div>
+                <div>
+                    <div class="carousel-frame">
+                        <div class="slide-img active-slide" style="background-image: url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=600&q=80')"></div>
+                        <div class="slide-img" style="background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=600&q=80')"></div>
+                    </div>
+                    <div class="carousel-nav-btns">
+                        <button class="nav-arrow left-arrow" onclick="rotateSlide(-1)">&#8592; Prev</button>
+                        <button class="nav-arrow right-arrow" onclick="rotateSlide(1)">Next &#8594;</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SERVICES SECTION (With Interactive Split Drag Slider) -->
+        <div id="services" class="app-section">
+            <div class="services-layout">
+                <div class="services-menu-list">
+                    <div class="menu-item">
+                        <h3>Interior Masterplanning</h3>
+                        <p>Complete spatial architectural realignment mapping to optimize pure organic ambient daylight entry.</p>
+                    </div>
+                    <div class="menu-item">
+                        <h3>Bespoke Curation Blueprints</h3>
+                        <p>Sourcing raw textures, sustainable premium linen layers, and hand-sculpted stone furniture accents.</p>
+                    </div>
+                </div>
+                
+                <!-- Slide Window Component Container Frame -->
+                <div class="reveal-showcase-box">
+                    <!-- Before Layer (Full Canvas Bottom Image) -->
+                    <div class="reveal-layer" style="background-image: url('https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=600&q=80')"></div>
+                    <!-- After Layer (Dynamic Variable Width Image Overlay) -->
+                    <div id="afterSliderLayer" class="reveal-layer after-layer" style="background-image: url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80')"></div>
+                    <!-- native HTML interaction drag engine track -->
+                    <input type="range" min="0" max="100" value="50" class="range-slider-control" id="revealDragControl" oninput="updateSplitReveal(this.value)">
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTACT ATELIER SECTION -->
+        <div id="contact" class="app-section">
+            <div class="contact-layout">
+                <div class="contact-details">
+                    <div class="detail-row">
+                        <span class="label">Inquiries</span>
+                        <span class="value">hello@thestudioopr.com</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Studio Line</span>
+                        <span class="value">(469) 245-3795</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Location</span>
+                        <span class="value">Plano, Texas Atelier</span>
+                    </div>
+                </div>
+                <div class="contact-editorial-img"></div>
+            </div>
+        </div>
+
+        <!-- REVIEWS JOURNAL JOURNAL PLACEHOLDER SECTION -->
+        <div id="reviews" class="app-section">
+            <div class="reviews-layout-centered">
+                <div class="launch-announcement-box editorial-card">
+                    <h4>The Journal Is Coming</h4>
+                    <p>We are currently curating spaces for our premiere clients. Our complete editorial log showing transformations, customer stories, and design reviews will debut soon.</p>
+                    <div class="editorial-badge">Autumn 2026</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- --- JAVASCRIPT SYSTEM ENGINE --- -->
+    <script>
+        /* --- NAVIGATION INTERACTION MOTOR --- */
+        function switchTab(sectionId, element) {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                item.classList.add('inactive-tab');
+            });
+            element.classList.add('active');
+            element.classList.remove('inactive-tab');
+
+            document.querySelectorAll('.app-section').forEach(sec => {
+                sec.classList.remove('active-section');
+            });
+            document.getElementById(sectionId).classList.add('active-section');
+        }
+
+        /* --- HOMEPAGE CAROUSEL HANDLING --- */
+        let slideIndex = 0;
+        const slides = document.querySelectorAll('.slide-img');
+
+        function rotateSlide(offset) {
+            slides[slideIndex].classList.remove('active-slide');
+            slideIndex += offset;
+            if (slideIndex >= slides.length) slideIndex = 0;
+            if (slideIndex < 0) slideIndex = slides.length - 1;
+            slides[slideIndex].classList.add('active-slide');
+        }
+
+        /* --- INTERACTIVE SPLIT BEFORE/AFTER ENGINE --- */
+        function updateSplitReveal(sliderValue) {
+            const overlayLayer = document.getElementById('afterSliderLayer');
+            // Dynamically updates width percentage mimicking high-end JavaScript slider packages
+            overlayLayer.style.width = sliderValue + "%";
+        }
+    </script>
+</body>
+</html>
